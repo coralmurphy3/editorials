@@ -2,7 +2,7 @@
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Editorials in Puerto Rico</title>
         <meta property="og:title" content="Word for Word">
         <meta property="og:description" content="The gender gap in Puerto Rican publishing">
@@ -16,11 +16,15 @@
             }
 
             .full-bleed-image {
+                display: flex;
+                flex-direction: column;
                 height: 100vh;
-                background-position: contain;
+                align-self: center;
                 background-repeat: no-repeat;
                 background-size: cover;
-                position: relative;
+                background-attachment: fixed;
+                align-items: center;
+                justify-content: center;
             }
             
             .full-bleed-image .image-text {
