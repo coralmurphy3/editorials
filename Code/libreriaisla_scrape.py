@@ -5,26 +5,29 @@ from tabulate import tabulate
 import re
 
 # URL of the web page
-url = "https://www.libreriaisla.com/collections/editoriales-de-puerto-rico/editorial-upr?page=5&view=ajax"
+url = "https://www.libreriaisla.com/collections/editorial-patria"
 
-# Send a GET request to fetch the web page content
+# Send GET request to fetch the web page content
 response = requests.get(url)
 
 # Parse the HTML content using BeautifulSoup
 soup = BeautifulSoup(response.content, "html.parser")
 
-# Find all product titles and authors on the page
+# Find all product titles (Títulos) and authors (Autores) on the page
 product_titles = soup.find_all(class_="tt-title prod-thumb-title-color")
 
-# Extract the text content of each title and author
+# Extract the text content of each title and author 
 titles = [title.text.strip() for title in product_titles]
 
+#Create list to extract author from each item in page
 authors = []
 for title in product_titles:
     newurl = "https://www.libreriaisla.com/"+title.find('a').attrs['href']
+
     #Get a new soup for the title
     response = requests.get(newurl)
     newsoup=BeautifulSoup(response.content, "html.parser")
+
     #Find author in new soup
     full_description = newsoup.find(attrs={'itemprop':"description"})
     author_name = ''
@@ -48,15 +51,15 @@ data = {
 }
 df = pd.DataFrame(data)
 
-# Data Cleaning Tasks
+# Data Cleaning
 
-# 1. Remove leading/trailing whitespaces
+# Remove leading/trailing whitespaces
 df['Title'] = df['Title'].str.strip()
 
-# 2. Remove duplicates
+# Remove duplicates
 df = df.drop_duplicates()
 
-# 3. Remove empty rows
+# Remove empty rows
 df = df.dropna()
 
 # # 4. Convert data types if needed
